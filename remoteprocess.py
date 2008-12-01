@@ -25,3 +25,21 @@ class RPopen(Popen):
 
         super(RPopen, self).__init__(*args, **kwargs)
 
+def call(*args, **kwargs):
+    p = RPopen(*args, **kwargs)
+    p.wait()
+    return p.returncode
+
+def communicate(*args, **kwargs):
+    kwargs['stdin'] = PIPE
+    kwargs['stdout'] = PIPE
+    kwargs['stderr'] = PIPE
+
+    if 'input' in kwargs:
+        input = kwargs.pop('input')
+    else:
+        input = args[0]
+        args = args[1:]
+
+    p = RPopen(*args, **kwargs)
+    return p.communicate(input)
