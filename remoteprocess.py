@@ -13,7 +13,6 @@ class RPopen(Popen):
             cmd = args[0]
 
         cmd = ['ssh',
-               '-n',
                '-l', user,
                host,
                ] + cmd
